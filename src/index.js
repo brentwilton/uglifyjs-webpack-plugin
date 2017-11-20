@@ -123,18 +123,14 @@ class UglifyJsPlugin {
               let input;
               let inputSourceMap;
 
-              if (this.options.sourceMap) {
-                if (asset.sourceAndMap) {
-                  const sourceAndMap = asset.sourceAndMap();
-                  inputSourceMap = sourceAndMap.map;
-                  input = sourceAndMap.source;
-                } else {
-                  inputSourceMap = asset.map();
-                  input = asset.source();
-                }
+              if (this.options.sourceMap && asset.sourceAndMap) {
+                const sourceAndMap = asset.sourceAndMap();
+                input = sourceAndMap.source;
+                inputSourceMap = sourceAndMap.map;
                 sourceMap = new SourceMapConsumer(inputSourceMap);
               } else {
                 input = asset.source();
+                inputSourceMap = null;
               }
 
               // Handling comment extraction
